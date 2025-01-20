@@ -1,12 +1,25 @@
-const Sorting = () => {
+import { useState } from "react";
+import useProductData from "../Hooks/useProductData";
+
+export default function Dropdown() {
+  const [isOpen, setIsOpen] = useState(false);
+  const {sortByPrice} = useProductData();
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  
+  
   return (
     <div className="relative inline-block text-left">
+      {/* Button */}
       <div>
         <button
           type="button"
+          onClick={toggleDropdown}
           className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm text-gray-400 hover:text-gray-500 focus:text-gray-700 transition-all"
           id="menu-button"
-          aria-expanded="true"
+          aria-expanded={isOpen}
           aria-haspopup="true"
         >
           Sort
@@ -25,38 +38,37 @@ const Sorting = () => {
         </button>
       </div>
 
-      {/* <!-- Sort Options --> */}
-      <div
-        className="absolute z-10 mt-2 left-5 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-        role="menu"
-        aria-orientation="vertical"
-        aria-labelledby="menu-button"
-        tabIndex="-1"
-      >
-        <div className="py-1" role="none">
-          <span
-            className="cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-all"
-            role="menuitem"
-            tabIndex="-1"
-            // onClick="toggleDropdown()"
-            id="menu-item-0"
-          >
-            Low to High
-          </span>
-          <span
-            href=""
-            className="cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-all"
-            role="menuitem"
-            tabIndex="-1"
-            // onClick="toggleDropdown()"
-            id="menu-item-0"
-          >
-            High to Low
-          </span>
+      {/* Dropdown Menu */}
+      {isOpen && (
+        <div
+          className="absolute z-10 mt-2 left-0 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+          role="menu"
+          aria-orientation="vertical"
+          aria-labelledby="menu-button"
+          tabIndex="-1"
+        >
+          <div className="py-1" role="none">
+            <span
+              onClick={() => sortByPrice('low-to-high')}
+              className="cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-all"
+              role="menuitem"
+              tabIndex="-1"
+              id="menu-item-0"
+            >
+              Low to High
+            </span>
+            <span
+              onClick={() => sortByPrice("high-to-low")}
+              className="cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-all"
+              role="menuitem"
+              tabIndex="-1"
+              id="menu-item-1"
+            >
+              High to Low
+            </span>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
-};
-
-export default Sorting;
+}

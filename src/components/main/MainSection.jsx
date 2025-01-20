@@ -1,10 +1,16 @@
+
 import Card from "../Card";
 import Cart from "../Cart";
 import Filter from "../Filter";
 import Search from "../Search";
+import Skeleton from "../Skeleton";
 import Sorting from "../Sorting";
 
+import useProductData from "../../Hooks/useProductData";
+
 export default function Main() {
+  const { productData, loading, error } = useProductData();
+
   return (
     <div>
       <div className="pt-16 sm:pt-24 lg:pt-40">
@@ -32,7 +38,7 @@ export default function Main() {
             {/* <!-- Search and Cart --> */}
             <div className="flex gap-2 items-center">
               {/* <!-- Search --> */}
-                <Search />
+              <Search />
               {/* <!-- Cart --> */}
               <Cart />
             </div>
@@ -44,7 +50,17 @@ export default function Main() {
             <div className="mx-auto max-w-2xl px-4 py-4 sm:px-6 lg:max-w-7xl lg:px-8">
               <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
                 {/* <!-- Card --> */}
-                  <Card />
+                {loading?.state ? (
+                  <Skeleton />
+                ) : error ? (
+                  <p>Failed to load products</p>
+                ) : productData?.length > 0 ? (
+                  productData.map((product) => (
+                    <Card key={product.id} product={product} />
+                  ))
+                ) : (
+                  <p>No products available</p>
+                )}
                 {/* <!-- More products... --> */}
               </div>
             </div>

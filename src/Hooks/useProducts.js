@@ -13,7 +13,7 @@ const useProducts = () => {
       setLoading((prev) => ({
         ...prev,
         state: true,
-        message: "Fetching data",
+        message: "Fetching data....",
       }));
       const response = await fetch(`https://fakestoreapi.com/products`);
       if (!response.ok) {
@@ -21,6 +21,7 @@ const useProducts = () => {
         throw new Error(errorMessage);
       }
       const data = await response.json();
+      console.log(data)
 
       setProductData(data);
     } catch (error) {
@@ -34,12 +35,8 @@ const useProducts = () => {
     }
   }, []);
   useEffect(() => {
-    setLoading((prev) => ({
-      ...prev,
-      state: true,
-      message: "loading product data",
-    }));
     fetchProducts();
+    console.log('useEffect')
   }, [fetchProducts]);
   return {loading, error, productData}
 };
