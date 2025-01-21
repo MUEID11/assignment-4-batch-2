@@ -1,5 +1,5 @@
 import { useState } from "react";
-import useProductData from "../Hooks/useProductData";
+import { useProductData } from "../Hooks";
 
 export default function Dropdown() {
   const [isOpen, setIsOpen] = useState(false);

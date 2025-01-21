@@ -1,8 +1,21 @@
 import { useState } from "react";
+import { useDebounce, useProductData } from "../Hooks";
+
 
 export default function Search() {
   const [searchTerm, setSearchTerm] = useState('');
+  const {searchByTitle} = useProductData();
 
+  const doSearch = useDebounce((searchTerm) => {
+    searchByTitle(searchTerm)
+  }, 1000)
+
+  function handleChange(e){
+    e.preventDefault();
+    const value = e.target.value;
+    setSearchTerm(value)
+    doSearch(value)
+  }
   return (
     <div className="flex flex-1 items-center px-3.5 py-2 text-gray-400 group hover:ring-1 hover:ring-gray-300 focus-within:!ring-2 ring-inset focus-within:!ring-teal-500 rounded-md">
       <svg
@@ -26,7 +39,8 @@ export default function Search() {
         type="text"
         aria-expanded="false"
         aria-autocomplete="list"
-        onChange={e=>setSearchTerm(e)}
+        value={searchTerm}
+        onChange={handleChange}
         style={{caretColor: "rgb(107, 114, 128)"}}
       />
     </div>

@@ -1,5 +1,10 @@
+import { useState } from "react";
+import { useProductData } from "../Hooks";
+
 export default function Card({ product }) {
   const { title, image, category,price } = product;
+  
+  const {itemToCart} = useProductData();
   return (
     <div className="relative">
       <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md lg:aspect-none lg:h-80">
@@ -17,7 +22,7 @@ export default function Card({ product }) {
         <p className="text-sm font-medium text-gray-900">${price}</p>
       </div>
       {/* <!-- Button --> */}
-      <div className="cursor-pointer rounded-md bg-white text-[0.8125rem] font-medium leading-5 text-slate-700 ring-1   hover:ring-1 ring-slate-700/10 hover:bg-slate-50 hover:text-slate-900 items-center text-center mb-3 mx-3 flex-1">
+      <div onClick={() => itemToCart(product)} className="cursor-pointer rounded-md bg-white text-[0.8125rem] font-medium leading-5 text-slate-700 ring-1   hover:ring-1 ring-slate-700/10 hover:bg-slate-50 hover:text-slate-900 items-center text-center mb-3 mx-3 flex-1">
         <div className="flex px-3 py-2 justify-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"

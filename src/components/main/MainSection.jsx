@@ -1,4 +1,3 @@
-
 import Card from "../Card";
 import Cart from "../Cart";
 import Filter from "../Filter";
@@ -51,7 +50,13 @@ export default function Main() {
               <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
                 {/* <!-- Card --> */}
                 {loading?.state ? (
-                  <Skeleton />
+                  <>
+                    {
+                      Array(8)
+                      .fill(0)
+                      .map((_, idx) => <Skeleton key={idx}/>)
+                    }
+                  </>
                 ) : error ? (
                   <p>Failed to load products</p>
                 ) : productData?.length > 0 ? (
