@@ -2,15 +2,18 @@ import { useEffect, useReducer } from "react";
 import { ProductContext } from "../context";
 import { useProducts } from "../Hooks";
 import { TaskReducer } from "./ProductReducer";
-import { PRODUCTS_TO_CART, SEARCH_PRODUCTS, SET_PRODUCTS, SORT_PRODUCTS } from "./action";
+import { PRODUCTS_TO_CART, SEARCH_PRODUCTS, SET_ALL_PRODUCTS, SET_PRODUCTS, SORT_PRODUCTS } from "./action";
 const initialState = {
   products:[],
-  cartItems: []
+  allProducts:[],
+  cartItems: [],
 }
 
 const ProductDataProvider = ({ children }) => {
   const { loading, error, productData } = useProducts();
   const [state, dispatch] = useReducer(TaskReducer, initialState);
+
+
   //setting product data to reducers state
   useEffect(() => {
 
@@ -18,6 +21,10 @@ const ProductDataProvider = ({ children }) => {
   
       dispatch({
         type: SET_PRODUCTS,
+        payload: productData,
+      });
+      dispatch({
+        type: SET_ALL_PRODUCTS,
         payload: productData,
       });
     }

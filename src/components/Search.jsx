@@ -8,7 +8,7 @@ export default function Search() {
 
   const doSearch = useDebounce((searchTerm) => {
     searchByTitle(searchTerm)
-  }, 1000)
+  }, 700)
 
   function handleChange(e){
     e.preventDefault();
